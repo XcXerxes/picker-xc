@@ -42,11 +42,11 @@ export default class Picker extends Component{
             )
             case "time":
             return(
-                <PickerTime start={this.props.start} current={this.state.current} end={this.props.end} ref="time"/>
+                <PickerTime  {...this.props} current={this.state.current}  ref="time"/>
             );
             case "date":
                 return(
-                 <PickerDate current={this.state.current} start={this.props.start} end={this.props.end} fields={this.props.fields} ref="date"/>
+                 <PickerDate  {...this.props}  current={this.state.current} ref="date"/>
                 )
             default:
 

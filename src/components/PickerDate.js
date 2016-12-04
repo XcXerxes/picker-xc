@@ -141,12 +141,13 @@ export default class PickerDate extends Component {
         return year;
     }
     render() {
+        const {yearCurrent,monthCurrent,dayCurrent,yearArray,monthArray,dayArray}=this.state;
         return ( 
             < div className = "wx-picker-bd" >
-                < PickerRing array = {this.state.yearArray}  current = {this.state.yearCurrent - 1900} ref = {ref => this._yearPicker = ref} onPickerSelect = {this.onYearSelect}/> 
-                < PickerRing array = {this.state.monthArray} current = {this.state.monthCurrent}  hidden = {"year" ===this.props.fields} ref = {ref => this._monthPicker = ref}
+                < PickerRing array = {yearArray}  current = {yearCurrent - 1900} ref = {ref => this._yearPicker = ref} onPickerSelect = {this.onYearSelect}/> 
+                < PickerRing array = {monthArray} current = {monthCurrent}  hidden = {"year" ===this.props.fields} ref = {ref => this._monthPicker = ref}
                     onPickerSelect = {this.onMonthSelect}/> 
-                < PickerRing array = {this.state.dayArray}  current = { this.state.dayCurrent - 1} hidden ={"day" !==this.props.fields}  ref = {ref => this._dayPicker = ref}
+                < PickerRing array = {dayArray}  current = { dayCurrent - 1} hidden ={"day" !==this.props.fields}  ref = {ref => this._dayPicker = ref}
                 onPickerSelect = {this.onDaySelect}/> 
             < /div>
         )

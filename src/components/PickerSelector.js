@@ -20,7 +20,7 @@ export default class PickerSelector extends Component{
     render(){
         return (
             <div className="wx-picker-bd">
-                <PickerRing array={this.props.array} current={this.props.current} onPickerSelect={this.onPickerSelect}/>
+                <PickerRing {...this.props} onPickerSelect={this.onPickerSelect}/>
             </div>
         )
     }
