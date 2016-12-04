@@ -34,16 +34,23 @@ export default class PickerDate extends Component {
         this.setCurrent=this.setCurrent.bind(this);
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.current != this.props.current) {debugger;
-            const arr = nextProps.current.split("-");
-            const year = parseInt(arr[0]);
-            const month = parseInt(arr[1]);
-            const day = parseInt(arr[2]);
-            this.setState({
-                yearCurrent: isNaN(year) ? (new Date).getFullYear : Math.min(Math.max(year, 0), 2100),
-                monthCurrent: isNaN(month) ? 0 : Math.min(Math.max(month, 0), 11),
-                dayCurrent: isNaN(day) ? 1 : Math.min(Math.max(day, 0), 31)
-            })
+        if (nextProps.current != this.props.current) {
+            if(nextProps.fields==="year"){
+                const year=parseInt(nextProps.current)
+                this.setState({
+                    yearCurrent: isNaN(year) ? (new Date).getFullYear : Math.min(Math.max(year, 0), 2100),
+                })
+            }else {
+                const arr = nextProps.current.split("-");
+                const year = parseInt(arr[0]);
+                const month = parseInt(arr[1]);
+                const day = parseInt(arr[2]);
+                this.setState({
+                    yearCurrent: isNaN(year) ? (new Date).getFullYear : Math.min(Math.max(year, 0), 2100),
+                    monthCurrent: isNaN(month) ? 0 : Math.min(Math.max(month-1, 0), 11),
+                    dayCurrent: isNaN(day) ? 1 : Math.min(Math.max(day, 0), 31)
+                })
+            }
         }
             nextProps.start != this.props.start && this.setRange("start", nextProps.start || "1900-01-01");
             nextProps.end != this.props.end && this.setRange("end", nextProps.end || "2100-01-01");
@@ -55,7 +62,7 @@ export default class PickerDate extends Component {
             this.setCurrent(this.props.current);
         }
         //判断有效值
-    validDate(yearCurrent, monthCurrent, dayCurrent) {debugger;
+    validDate(yearCurrent, monthCurrent, dayCurrent) {
             const validVal = new Date(yearCurrent+'-'+(monthCurrent+1)+'-'+dayCurrent);
             const day = validVal.getDate();
             this.state.dayCurrent != day && this.setState({
@@ -72,7 +79,7 @@ export default class PickerDate extends Component {
             }
         }
         //设置当前的值
-    setCurrent(current) {
+    setCurrent(current) {debugger;
             if (current) {
                 let invalidVal = new Date(current);
                 "Invalid Date" === invalidVal && (invalidVal = new Date);
@@ -117,52 +124,31 @@ export default class PickerDate extends Component {
         });
         this._dayPicker.setCurrent(day - 1)
     }
+    //获取当前的值
+    getValue(){
+        let year=this.state.yearCurrent;
+        if(this.props.fields==="month"){
+          let month=this.state.monthCurrent+1;
+            month=month>9?month:`0${month}`;
+            year=`${year}-${month}`;
+        }else if(this.props.fields==="day"){
+            let month=this.state.monthCurrent+1;
+            let day=this.state.dayCurrent;
+            month=month>9?month:`0${month}`;
+            day=day>9?day:`0${day}`;
+            year=`${year}-${month}-${day}`;
+        }
+        return year;
+    }
     render() {
-        debugger;
-        return ( < div className = "wx-picker-bd" >
-            < PickerRing array = {
-                this.state.yearArray
-            }
-            current = {
-                this.state.yearCurrent - 1900
-            }
-            ref = {
-                ref => this._yearPicker = ref
-            }
-            onPickerSelect = {
-                this.onYearSelect
-            }
-            /> < PickerRing array = {
-                this.state.monthArray
-            }
-            current = {
-                this.state.monthCurrent
-            }
-            hidden = {
-                "year" === this.props.fields
-            }
-            ref = {
-                ref => this._monthPicker = ref
-            }
-            onPickerSelect = {
-                this.onMonthSelect
-            }
-            /> < PickerRing array = {
-                this.state.dayArray
-            }
-            current = {
-                this.state.dayCurrent - 1
-            }
-            hidden = {
-                "day" !== this.props.fields
-            }
-            ref = {
-                ref => this._dayPicker = ref
-            }
-            onPickerSelect = {
-                this.onDaySelect
-            }
-            /> < /div>
+        return ( 
+            < div className = "wx-picker-bd" >
+                < PickerRing array = {this.state.yearArray}  current = {this.state.yearCurrent - 1900} ref = {ref => this._yearPicker = ref} onPickerSelect = {this.onYearSelect}/> 
+                < PickerRing array = {this.state.monthArray} current = {this.state.monthCurrent}  hidden = {"year" ===this.props.fields} ref = {ref => this._monthPicker = ref}
+                    onPickerSelect = {this.onMonthSelect}/> 
+                < PickerRing array = {this.state.dayArray}  current = { this.state.dayCurrent - 1} hidden ={"day" !==this.props.fields}  ref = {ref => this._dayPicker = ref}
+                onPickerSelect = {this.onDaySelect}/> 
+            < /div>
         )
     }
 }

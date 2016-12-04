@@ -23,6 +23,7 @@ module.exports={
     devServer:{
       contentBase:"./public"  
     },
+    devtool:"eval-source-map",
     postcss:[
         require("autoprefixer")({ browsers: ['last 10 versions'] })
     ],

@@ -14,6 +14,9 @@ export default class PickerSelector extends Component{
     }
     componentDidMount(){
     }
+    getValue(){
+        return this.current;
+    }
     render(){
         return (
             <div className="wx-picker-bd">

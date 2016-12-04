@@ -58,9 +58,10 @@ export default class PickerTime extends Component{
         this.setState({minuteCurrent:currentVal});
         this._minutePicker.setCurrent(currentVal); 
     }
+    getValue(){
+        return `${this.state.hourArray[this.state.hourCurrent]}:${this.state.minuteArray[this.state.minuteCurrent]}`
+    }
     render(){
-        const {start,end}=this.props;
-        const index=this.state.hourArray.indexOf()
         return(
             <div className="wx-picker-bd">
                 <PickerRing  ref={ref=>this._hourPicker=ref} array={this.state.hourArray} 

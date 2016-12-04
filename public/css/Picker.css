@@ -8,7 +8,6 @@
     z-index: 1000;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
-    animation: fadeIn ease .3s forwards
 }
 
 .wx-picker {
@@ -50,6 +49,13 @@
     flex: 1;
     color: #586c94;
     text-decoration: none
+}
+.container{
+     margin:50px 0;
+    border-bottom: 1px solid #ccc;
+}
+.xc-picker-choose{
+    color:darkgray;
 }
 
 .wx-picker-bd {
@@ -140,4 +146,12 @@
 
 .wx-picker-item-disabled {
     color: #999
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
 }
